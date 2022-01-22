@@ -21,7 +21,7 @@ public class Order {
     @OneToMany(mappedBy = "order")
     private List<ItemOrder> itemOrders;
 
-    @Column(length = 10, precision = 2)
+    @Column(length = 10, precision = 20, scale = 2)
     private BigDecimal total;
 
     public Integer getId() {
@@ -62,5 +62,15 @@ public class Order {
 
     public void setItemOrders(List<ItemOrder> itemOrders) {
         this.itemOrders = itemOrders;
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id=" + id +
+                ", client=" + client +
+                ", dateOrder=" + dateOrder +
+                ", total=" + total +
+                '}';
     }
 }
