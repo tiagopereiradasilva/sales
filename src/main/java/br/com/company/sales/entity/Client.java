@@ -12,7 +12,7 @@ public class Client {
     @Column(length = 100)
     private String name;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 

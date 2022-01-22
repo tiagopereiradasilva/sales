@@ -25,25 +25,25 @@ public class SalesSysApplication {
 			clientRepository.save(client1);
 			clientRepository.save(client2);
 			System.out.println("\n[Step 2] : Listing clients ... ");
-			List<Client> clients = clientRepository.all();
+			List<Client> clients = clientRepository.findAll();
 			clients.forEach(System.out::println);
 
 			System.out.println("\n[Step 3] : Updating clients... ");
 			clients.forEach(c -> {
-				c.setName(c.getName()+" Updated ");
-				clientRepository.update(c);
+				c.setName(c.getName()+" Updated");
+				clientRepository.save(c);
 			});
 
-			System.out.println("\n[Step 4] : Listing clients updated... ");
-			clients = clientRepository.all();
+			System.out.println("\n[Step 4] : Listing clients updated (Finding by name)... ");
+			clients = clientRepository.findByNameLike("%Up%");
 			clients.forEach(System.out::println);
-
+			System.out.println(clientRepository.existsByNameLike("%Ti%"));
 			System.out.println("\n[Step 5] : Deleting clients... ");
-			clients.forEach(c -> {
+			for (Client c : clients) {
 				clientRepository.delete(c);
-			});
+			}
 
-			clients = clientRepository.all();
+			clients = clientRepository.findAll();
 			if(clients.isEmpty()){
 				System.out.println("\nNone client :(");
 			}else {
