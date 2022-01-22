@@ -28,27 +28,27 @@ public class SalesSysApplication {
 			List<Client> clients = clientRepository.all();
 			clients.forEach(System.out::println);
 
-//			System.out.println("\n[Step 3] : Updating clients... ");
-//			clients.forEach(c -> {
-//				c.setName(c.getName()+" Updated ");
-//				clientRepository.update(c);
-//			});
-//
-//			System.out.println("\n[Step 4] : Listing clients updated... ");
-//			clients = clientRepository.all();
-//			clients.forEach(System.out::println);
-//
-//			System.out.println("\n[Step 5] : Deleting clients... ");
-//			clients.forEach(c -> {
-//				clientRepository.delete(c);
-//			});
-//
-//			clients = clientRepository.all();
-//			if(clients.isEmpty()){
-//				System.out.println("\nNone client :(");
-//			}else {
-//				clients.forEach(System.out::println);
-//			}
+			System.out.println("\n[Step 3] : Updating clients... ");
+			clients.forEach(c -> {
+				c.setName(c.getName()+" Updated ");
+				clientRepository.update(c);
+			});
+
+			System.out.println("\n[Step 4] : Listing clients updated... ");
+			clients = clientRepository.all();
+			clients.forEach(System.out::println);
+
+			System.out.println("\n[Step 5] : Deleting clients... ");
+			clients.forEach(c -> {
+				clientRepository.delete(c);
+			});
+
+			clients = clientRepository.all();
+			if(clients.isEmpty()){
+				System.out.println("\nNone client :(");
+			}else {
+				clients.forEach(System.out::println);
+			}
 		};
 	}
 	public static void main(String[] args) {
