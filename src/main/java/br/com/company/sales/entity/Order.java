@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Entity
+@Table(name = "tb_order")
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
