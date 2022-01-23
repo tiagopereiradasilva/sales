@@ -12,6 +12,8 @@ public class Client {
     private Integer id;
     @Column(length = 100)
     private String name;
+    @Column(length = 11)
+    private String cpf;
 
     @OneToMany(mappedBy = "client", fetch = FetchType.LAZY)
     private Set<Order> orders;
@@ -39,6 +41,14 @@ public class Client {
 
     public void setOrders(Set<Order> orders) {
         this.orders = orders;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 
     @Override
