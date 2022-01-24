@@ -23,7 +23,7 @@ public class ClientController {
     }
 
     @GetMapping("/{id}")
-    public Client getById(@PathVariable Integer id){
+    public Client findById(@PathVariable Integer id){
         return clientRepository.findById(id).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente inexistente!"));
     }
