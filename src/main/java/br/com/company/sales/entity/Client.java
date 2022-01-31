@@ -2,6 +2,8 @@ package br.com.company.sales.entity;
 
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -15,6 +17,7 @@ public class Client {
     @Column(length = 11)
     private String cpf;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "client", fetch = FetchType.LAZY)
     private Set<Order> orders;
 
