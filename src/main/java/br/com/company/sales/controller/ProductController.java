@@ -1,6 +1,7 @@
 package br.com.company.sales.controller;
 
 import br.com.company.sales.entity.Product;
+import br.com.company.sales.exception.SalesException;
 import br.com.company.sales.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
@@ -23,7 +24,7 @@ public class ProductController {
     @GetMapping("/{id}")
     public Product findById(@PathVariable Integer id){
         return productRepository.findById(id).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Produto inexistente!")
+                () -> new SalesException("Produto não encontrado!")
         );
     }
 
