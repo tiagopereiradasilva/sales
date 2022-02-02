@@ -10,10 +10,7 @@ import br.com.company.sales.repository.ClientRepository;
 import br.com.company.sales.repository.ItemOrderRepository;
 import br.com.company.sales.repository.OrderRepository;
 import br.com.company.sales.repository.ProductRepository;
-import br.com.company.sales.rest.dto.ItemOrderDTO;
-import br.com.company.sales.rest.dto.ItemOrderResponseDTO;
-import br.com.company.sales.rest.dto.OrderDTO;
-import br.com.company.sales.rest.dto.OrderResponseDTO;
+import br.com.company.sales.rest.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -77,6 +74,16 @@ public class OrderService {
                 .map(order -> converterOrderToResponseDTO(order))
                 .orElseThrow( () -> new SalesException("Pedido não encontrado!"));
 
+    }
+
+    @Transactional
+    public void updateStatus(Integer id, StatusOrderRequestDTO statusOrderRequestDTO){
+        orderRepository.findById(id).map(
+                order -> {
+                    order.setStatus(StatusOrder.valueOf(statusOrderRequestDTO.getStatus().toUpperCase()));
+                    return orderRepository.save(order);
+                }
+        ).orElseThrow( () -> new SalesException("Pedido não encontrado"));
     }
 
     private OrderResponseDTO converterOrderToResponseDTO(Order order){
