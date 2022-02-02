@@ -1,5 +1,7 @@
 package br.com.company.sales.entity;
 
+import br.com.company.sales.enums.StatusOrder;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -23,6 +25,10 @@ public class Order {
 
     @Column(length = 10, precision = 20, scale = 2)
     private BigDecimal total;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    private StatusOrder status;
 
     public Integer getId() {
         return id;
@@ -64,13 +70,23 @@ public class Order {
         this.itemOrders = itemOrders;
     }
 
+    public StatusOrder getStatus() {
+        return status;
+    }
+
+    public void setStatus(StatusOrder status) {
+        this.status = status;
+    }
+
     @Override
     public String toString() {
         return "Order{" +
                 "id=" + id +
                 ", client=" + client +
                 ", dateOrder=" + dateOrder +
+                ", itemOrders=" + itemOrders +
                 ", total=" + total +
+                ", status=" + status +
                 '}';
     }
 }
