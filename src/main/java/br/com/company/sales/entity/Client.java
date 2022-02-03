@@ -3,8 +3,10 @@ package br.com.company.sales.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.validator.constraints.br.CPF;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.util.Set;
 
 @Entity
@@ -13,8 +15,10 @@ public class Client {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     @Column(length = 100)
+    @NotEmpty(message = "Nome é obrigatório!")
     private String name;
     @Column(length = 11)
+    @CPF(message = "CPF deve ser válido")
     private String cpf;
 
     @JsonIgnore
