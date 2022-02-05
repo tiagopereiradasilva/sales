@@ -11,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.function.EntityResponse;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("api/pedidos")
 public class OrderController {
@@ -22,7 +24,7 @@ public class OrderController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Integer save(@RequestBody OrderDTO orderDTO){
+    public Integer save(@RequestBody @Valid OrderDTO orderDTO){
         Order order = orderService.save(orderDTO);
         return order.getId();
     }

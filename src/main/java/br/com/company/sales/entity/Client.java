@@ -18,6 +18,7 @@ public class Client {
     @NotEmpty(message = "Nome é obrigatório!")
     private String name;
     @Column(length = 11)
+    @NotEmpty(message = "Cpf é obrigatório")
     @CPF(message = "CPF deve ser válido")
     private String cpf;
 
