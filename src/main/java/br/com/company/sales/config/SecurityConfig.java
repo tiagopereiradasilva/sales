@@ -1,6 +1,6 @@
 package br.com.company.sales.config;
 
-import br.com.company.sales.service.UserService;
+import br.com.company.sales.service.UserSystemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -15,7 +15,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     //Serviço para buscar informações do usuário
     @Autowired
-    private UserService userService;
+    private UserSystemService userSystemService;
 
     //Encoder para o password
     @Bean
@@ -26,7 +26,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     //Método para gerenciar as altenticações...
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userService)
+        auth.userDetailsService(userSystemService)
                 .passwordEncoder(passwordEncoder());
     }
 
@@ -42,9 +42,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .hasAnyRole("USER", "ADMIN")
                 .antMatchers("/api/pedidos/**")
                 .hasRole("ADMIN")
+                .antMatchers("/h2-console/**")
+                .permitAll()
+                .and()
+                .headers().frameOptions().disable()
                 .and()
                 .httpBasic();
-
-
     }
 }
