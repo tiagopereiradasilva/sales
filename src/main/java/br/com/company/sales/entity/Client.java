@@ -3,10 +3,12 @@ package br.com.company.sales.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.validator.constraints.br.CPF;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Entity
@@ -21,6 +23,10 @@ public class Client {
     @NotEmpty(message = "Cpf é obrigatório")
     @CPF(message = "CPF deve ser válido")
     private String cpf;
+    @UpdateTimestamp
+    private LocalDateTime createdAt;
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
 
     @JsonIgnore
     @OneToMany(mappedBy = "client", fetch = FetchType.LAZY)
