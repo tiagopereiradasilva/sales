@@ -1,17 +1,16 @@
-package br.com.company.sales.service;
+package br.com.company.sales.security.jwt;
 
-import br.com.company.sales.SalesSysApplication;
 import br.com.company.sales.entity.UserSystem;
-import io.jsonwebtoken.*;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.SpringApplication;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 
 @Service
@@ -46,7 +45,7 @@ public class JwtService {
                 .getBody();
     }
 
-    private boolean tokenIsValid(String token){
+    public boolean tokenIsValid(String token){
         try {
             //Pegando as claims do token.
             Claims claims = getClaims(token);
@@ -66,9 +65,24 @@ public class JwtService {
         }
     }
 
-    private String getUserName(String token)throws ExpiredJwtException{
-        //Pegando subject do token.
-        return getClaims(token).getSubject();
+    public String getUserName(String token){
+        try {
+            //Pegando subject do token.
+            return getClaims(token).getSubject();
+        }catch (Exception exception){
+            System.out.println(exception.getMessage());
+            return "";
+        }
+    }
+
+    public Long getExpireIn(String token){
+        try {
+            //Pegando subject do token.
+            return getClaims(token).getExpiration().getTime();
+        }catch (Exception exception){
+            System.out.println(exception.getMessage());
+            return 0L;
+        }
     }
 
     //Run de teste para essa classe. Para usá-lo, basta descomentá-lo e executar o projeto a partir dele.

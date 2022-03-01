@@ -1,6 +1,8 @@
 package br.com.company.sales.controller;
 
 import br.com.company.sales.entity.UserSystem;
+import br.com.company.sales.rest.dto.CredentialsRequestDTO;
+import br.com.company.sales.rest.dto.TokenResponseDTO;
 import br.com.company.sales.rest.dto.user.UserSystemResponseDTO;
 import br.com.company.sales.service.UserSystemService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +23,15 @@ public class UserSystemController {
     }
 
     @PostMapping
-    public ResponseEntity<UserSystemResponseDTO> save(@RequestBody UserSystem userSystem){
+    public ResponseEntity<UserSystem> save(@RequestBody UserSystem userSystem){
         String password = passwordEncoder.encode(userSystem.getPassword());
         userSystem.setPassword(password);
         return ResponseEntity.status(HttpStatus.CREATED).body(userSystemService.save(userSystem));
+    }
+
+    @PostMapping("/auth")
+    public ResponseEntity<TokenResponseDTO> auth(@RequestBody CredentialsRequestDTO credentials){
+        return ResponseEntity.status(HttpStatus.OK).body(userSystemService.auth(credentials));
     }
 
 }
