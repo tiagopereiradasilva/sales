@@ -4,7 +4,9 @@ import br.com.company.sales.entity.UserSystem;
 import br.com.company.sales.exception.SalesException;
 import br.com.company.sales.repository.UserSystemRepository;
 import br.com.company.sales.rest.dto.CredentialsRequestDTO;
+import br.com.company.sales.rest.dto.ResponseTemplate;
 import br.com.company.sales.rest.dto.TokenResponseDTO;
+import br.com.company.sales.rest.dto.user.UserSystemRequestDTO;
 import br.com.company.sales.rest.dto.user.UserSystemResponseDTO;
 import br.com.company.sales.security.jwt.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +34,6 @@ public class UserSystemService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         UserSystem userSystem = getUserSystemByUserName(username);
-        System.out.println("AQUI ==> "+userSystem.getUsername());
         String[] roles = (userSystem.isAdmin()) ? new String[]{"ADMIN", "USER"} : new String[]{"USER"};
         return User
                 .builder()
@@ -42,21 +43,24 @@ public class UserSystemService implements UserDetailsService {
                 .build();
     }
 
-    public UserSystem save(UserSystem userSystem){
-        var user = userSystemRepository.findByUsername(userSystem.getUsername());
-        if(user.isPresent()){
-            throw new SalesException("Já existe usário com username: "+userSystem.getUsername());
+    public ResponseTemplate save(UserSystemRequestDTO userSystemRequestDTO){
+        String password = passwordEncoder.encode(userSystemRequestDTO.getPassword());
+        userSystemRequestDTO.setPassword(password);
+        var userSystem = userSystemRequestDTO.toUserSystem();
+        var userIsPresent = userSystemRepository.findByUsername(userSystem.getUsername()).isPresent();
+        if(userIsPresent){
+            throw new SalesException("Já existe usário com username: "+userSystemRequestDTO.getUsername());
         }
-        return userSystemRepository.save(userSystem);
+        return new ResponseTemplate(userSystemRepository.save(userSystem), "Usuário cadastrado com sucesso!");
     }
 
-    public TokenResponseDTO auth(CredentialsRequestDTO credentials){
+    public ResponseTemplate auth(CredentialsRequestDTO credentials){
         //buscando detalhes do usuário.
         UserDetails userDetails = loadUserByUsername(credentials.getUsername());
         //verificar se a senha informada está correta.
         boolean passwordIsValid = passwordEncoder.matches(credentials.getPassword(), userDetails.getPassword());
         if(passwordIsValid){
-            return getToken(credentials);
+            return new ResponseTemplate(getToken(credentials), "Token gerado com sucesso!");
         }
         throw new SalesException("Credenciais Inválidas");
     }
