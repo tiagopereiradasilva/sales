@@ -1,11 +1,10 @@
 package br.com.company.sales.rest.dto.user;
 
 import br.com.company.sales.entity.UserSystem;
+import br.com.company.sales.util.Helper;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 
 @Data
 @AllArgsConstructor
@@ -19,7 +18,7 @@ public class UserSystemRequestDTO {
 
     public UserSystem toUserSystem(){
         UserSystem userSystem = new UserSystem();
-        userSystem.setUsername(getUsername().toLowerCase());
+        userSystem.setUsername(Helper.toLowerCase(getUsername()));
         userSystem.setPassword(getPassword());
         userSystem.setAdmin(isAdmin());
         return userSystem;
