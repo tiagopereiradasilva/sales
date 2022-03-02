@@ -43,7 +43,10 @@ public class UserSystemService implements UserDetailsService {
     }
 
     public UserSystem save(UserSystem userSystem){
-
+        var user = userSystemRepository.findByUsername(userSystem.getUsername());
+        if(user.isPresent()){
+            throw new SalesException("Já existe usário com username: "+userSystem.getUsername());
+        }
         return userSystemRepository.save(userSystem);
     }
 
