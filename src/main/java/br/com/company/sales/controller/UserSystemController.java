@@ -2,6 +2,7 @@ package br.com.company.sales.controller;
 
 import br.com.company.sales.entity.UserSystem;
 import br.com.company.sales.rest.dto.CredentialsRequestDTO;
+import br.com.company.sales.rest.dto.ResponseTemplate;
 import br.com.company.sales.rest.dto.TokenResponseDTO;
 import br.com.company.sales.rest.dto.user.UserSystemRequestDTO;
 import br.com.company.sales.rest.dto.user.UserSystemResponseDTO;
@@ -26,14 +27,14 @@ public class UserSystemController {
     }
 
     @PostMapping
-    public ResponseEntity<UserSystem> save(@RequestBody @Valid UserSystemRequestDTO userSystemDto){
-        String password = passwordEncoder.encode(userSystemDto.getPassword());
-        userSystemDto.setPassword(password);
-        return ResponseEntity.status(HttpStatus.CREATED).body(userSystemService.save(userSystemDto.toUserSystem()));
+    public ResponseEntity<ResponseTemplate> save(@RequestBody @Valid UserSystemRequestDTO userSystemDto){
+//        String password = passwordEncoder.encode(userSystemDto.getPassword());
+//        userSystemDto.setPassword(password);
+        return ResponseEntity.status(HttpStatus.CREATED).body(userSystemService.save(userSystemDto));
     }
 
     @PostMapping("/auth")
-    public ResponseEntity<TokenResponseDTO> auth(@RequestBody CredentialsRequestDTO credentials){
+    public ResponseEntity<ResponseTemplate> auth(@RequestBody CredentialsRequestDTO credentials){
         return ResponseEntity.status(HttpStatus.OK).body(userSystemService.auth(credentials));
     }
 
