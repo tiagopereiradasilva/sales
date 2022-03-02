@@ -5,6 +5,7 @@ import br.com.company.sales.exception.StandardErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -50,6 +51,15 @@ public class SalesExceptionController {
     @ExceptionHandler(UsernameNotFoundException.class)
     public ResponseEntity<StandardErrorResponse> usernameNotFoundException(UsernameNotFoundException exception){
         String erros = exception.getMessage();
+        StandardErrorResponse standardErrorResponse = new StandardErrorResponse(erros);
+        standardErrorResponse.setTimestamp(Instant.now());
+        standardErrorResponse.setStatus(HttpStatus.BAD_REQUEST.value());
+        return ResponseEntity.status(standardErrorResponse.getStatus()).body(standardErrorResponse);
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<StandardErrorResponse> httpMessageNotReadableException(HttpMessageNotReadableException exception){
+        String erros = exception.getLocalizedMessage();
         StandardErrorResponse standardErrorResponse = new StandardErrorResponse(erros);
         standardErrorResponse.setTimestamp(Instant.now());
         standardErrorResponse.setStatus(HttpStatus.BAD_REQUEST.value());
