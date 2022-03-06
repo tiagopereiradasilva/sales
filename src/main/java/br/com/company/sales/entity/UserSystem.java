@@ -3,13 +3,15 @@ package br.com.company.sales.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Data
+
 @Entity
+@Data
 public class UserSystem {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -19,7 +21,8 @@ public class UserSystem {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
     private boolean admin;
-    @UpdateTimestamp
+    @CreationTimestamp
+    @Column(updatable = false)
     private LocalDateTime createdAt;
     @UpdateTimestamp
     private LocalDateTime updatedAt;

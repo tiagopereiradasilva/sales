@@ -3,6 +3,7 @@ package br.com.company.sales.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.validator.constraints.br.CPF;
 
@@ -23,7 +24,7 @@ public class Client {
     @NotEmpty(message = "Cpf é obrigatório")
     @CPF(message = "CPF deve ser válido")
     private String cpf;
-    @UpdateTimestamp
+    @CreationTimestamp
     private LocalDateTime createdAt;
     @UpdateTimestamp
     private LocalDateTime updatedAt;
@@ -63,6 +64,22 @@ public class Client {
 
     public void setCpf(String cpf) {
         this.cpf = cpf;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
     @Override
