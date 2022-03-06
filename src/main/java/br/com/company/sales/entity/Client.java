@@ -15,7 +15,7 @@ import java.util.Set;
 @Entity
 public class Client {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column(length = 100)
     @NotEmpty(message = "Nome é obrigatório!")
