@@ -3,6 +3,7 @@ package br.com.company.sales.controller;
 import br.com.company.sales.entity.Product;
 import br.com.company.sales.exception.SalesException;
 import br.com.company.sales.repository.ProductRepository;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
@@ -15,6 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/produtos")
+@SecurityRequirement(name = "bearerAuth")
 public class ProductController {
     private ProductRepository productRepository;
 

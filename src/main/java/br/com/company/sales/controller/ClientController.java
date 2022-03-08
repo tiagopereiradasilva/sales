@@ -3,9 +3,16 @@ package br.com.company.sales.controller;
 import br.com.company.sales.entity.Client;
 import br.com.company.sales.entity.Order;
 import br.com.company.sales.repository.ClientRepository;
+import br.com.company.sales.rest.dto.ResponseTemplate;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
@@ -25,6 +32,7 @@ import java.util.Set;
 
 @RestController
 @RequestMapping("api/clientes")
+@SecurityRequirement(name = "bearerAuth")
 public class ClientController {
     private ClientRepository clientRepository;
 
@@ -47,6 +55,31 @@ public class ClientController {
         return clientRepository.findAll(example);
     }
 
+    @Operation(summary = "Cria cliente")
+    @ApiResponses(
+            value = {
+                    @ApiResponse(
+                            responseCode = "201",
+                            description = "Sucesso ao criar cliente",
+                            content = {
+                                    @Content(
+                                            mediaType = "application/json",
+                                            schema = @Schema(implementation = Client.class)
+                                    )
+                            }
+                    ),
+                    @ApiResponse(
+                            responseCode = "400",
+                            description = "Parâmetro de entrada inválidos",
+                            content = {
+                                    @Content(
+                                            mediaType = "application/json",
+                                            schema = @Schema(implementation = ResponseTemplate.class)
+                                    )
+                            }
+                    )
+            }
+    )
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Client save(@RequestBody @Valid Client client){

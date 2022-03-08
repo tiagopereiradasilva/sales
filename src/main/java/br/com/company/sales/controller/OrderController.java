@@ -5,6 +5,7 @@ import br.com.company.sales.rest.dto.OrderDTO;
 import br.com.company.sales.rest.dto.OrderResponseDTO;
 import br.com.company.sales.rest.dto.StatusOrderRequestDTO;
 import br.com.company.sales.service.OrderService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,7 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("api/pedidos")
+@SecurityRequirement(name = "bearerAuth")
 public class OrderController {
     private OrderService orderService;
 

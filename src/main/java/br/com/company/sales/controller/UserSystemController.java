@@ -7,6 +7,8 @@ import br.com.company.sales.rest.dto.TokenResponseDTO;
 import br.com.company.sales.rest.dto.user.UserSystemRequestDTO;
 import br.com.company.sales.rest.dto.user.UserSystemResponseDTO;
 import br.com.company.sales.service.UserSystemService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
